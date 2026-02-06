@@ -15,23 +15,47 @@ namespace lb1
         /// <param name="args">аргумент</param>
         public static void Main(string[] args)
         {
-            // Создаём взрослого с партнёром
-            Adult adult1 = new Adult("Мария", "Петрова", 28, Gender.Female,
-                4321, 654321, MaritalStatus.Single, "Сбербанк", null);
+            // Создаём свой генератор случайных чисел для выбора типа персоны
+            // (это НЕ нарушает инкапсуляцию — мы не лезем в приватные поля RandomPerson)
+            Random random = new Random();
 
-            Adult adult2 = new Adult("Иван", "Иванов", 30, Gender.Male,
-                1234, 567890, MaritalStatus.Married, "ТГУ", adult1);
+            // Создаём список людей
+            PersonList list = new PersonList();
 
-            // Создаём ребёнка
-            Child child = new Child("Анна", "Иванова", Gender.Female, 8,
-                adult2, adult1, "Школа №15");
+            // Заполняем список 7 случайными людьми
+            for (int i = 0; i < 7; i++)
+            {
+                // Случайно выбираем: взрослый (0) или ребёнок (1)
+                if (random.Next(2) == 0)
+                {
+                    list.Add(RandomPerson.GetRandomAdult());
+                }
+                else
+                {
+                    list.Add(RandomPerson.GetRandomChild());
+                }
+            }
 
-            // Выводим информацию — метод НЕ выводит сам, только возвращает строку!
-            Console.WriteLine("=== Взрослый ===");
-            Console.WriteLine(adult2.GetInfo());  // ← только получение строки
+            // Выводим информацию о каждом человеке через полиморфизм
+            Console.WriteLine("=== Список из 7 случайных людей ===\n");
+            for (int i = 0; i < list.Count; i++)
+            {
+                Console.WriteLine($"--- Человек #{i + 1} ---");
+                Console.WriteLine(list.Get(i).GetInfo());
+                Console.WriteLine();
+            }
 
-            Console.WriteLine("\n=== Ребёнок ===");
-            Console.WriteLine(child.GetInfo());
+            // Определяем тип 4-го человека в списке (индекс 3)
+            Person person4 = list.Get(3);
+            Console.WriteLine("=== Тип 4-го человека в списке ===");
+            if (person4 is Adult)
+            {
+                Console.WriteLine("Четвёртый человек — взрослый (Adult)");
+            }
+            else if (person4 is Child)
+            {
+                Console.WriteLine("Четвёртый человек — ребёнок (Child)");
+            }
 
         }
 
