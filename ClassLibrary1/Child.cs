@@ -58,5 +58,24 @@ namespace Model
             get { return _school; }
             set { _school = value; }
         }
+
+        /// <summary>
+        /// Возвращает строковое описание ребёнка
+        /// </summary>
+        public override string GetInfo()
+        {
+            string baseInfo = $"Фамилия: {Surname}, Имя: {Name}, возраст: {Age}," +
+                $" пол: {(Gender == Gender.Male ? "мужской" : "женский")}";
+            string fatherInfo = Father != null
+                ? $"отец: {Father.Surname} {Father.Name}"
+                : "отец: не указан";
+            string motherInfo = Mother != null
+                ? $"мать: {Mother.Surname} {Mother.Name}"
+                : "мать: не указана";
+            string schoolInfo = string.IsNullOrWhiteSpace(School)
+                ? "учебное заведение: не указано"
+                : $"учебное заведение: {School}";
+            return $"{baseInfo}, {fatherInfo}, {motherInfo}, {schoolInfo}";
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Model
     /// <summary>
     /// Класс случайного человек
     /// </summary>
-    public class RandomPerson
+    /*public class RandomPerson
     {
         /// <summary>
         /// Создаёт и возвращает новый экземпляр класса Person со случайными данными.
@@ -47,5 +47,5 @@ namespace Model
 
             return new Person(name, surname, age, gender);
         }
-    }
+    }*/
 }

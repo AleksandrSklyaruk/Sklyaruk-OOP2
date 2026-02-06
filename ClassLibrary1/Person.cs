@@ -13,7 +13,7 @@ namespace Model
     /// <summary>
     /// Хранение и обработка данных о человеке
     /// </summary>
-    public class Person
+    public abstract class Person
     {
         /// <summary>
         /// Имя
@@ -179,6 +179,11 @@ namespace Model
                 }
             }
         }
+        /// <summary>
+        /// Абстрактный метод получения информации
+        /// </summary>
+        /// <returns></returns>
+        public abstract string GetInfo();
 
         /// <summary>
         /// Создание нового экземпляра класса Person по умолчанию.

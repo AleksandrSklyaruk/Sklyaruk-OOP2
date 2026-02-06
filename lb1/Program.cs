@@ -15,68 +15,24 @@ namespace lb1
         /// <param name="args">аргумент</param>
         public static void Main(string[] args)
         {
+            // Создаём взрослого с партнёром
+            Adult adult1 = new Adult("Мария", "Петрова", 28, Gender.Female,
+                4321, 654321, MaritalStatus.Single, "Сбербанк", null);
 
-            PersonList list1 = new PersonList();
-            PersonList list2 = new PersonList();
+            Adult adult2 = new Adult("Иван", "Иванов", 30, Gender.Male,
+                1234, 567890, MaritalStatus.Married, "ТГУ", adult1);
 
-            // Добавление трёх людей в каждый список
-            list1.Add(new Person("Александр", "Склярук", 23, Gender.Male));  
-            list1.Add(new Person("Араик", "Шароян", 24, Gender.Male));
-            list1.Add(new Person("Андрей", "Доценко", 23, Gender.Male));
+            // Создаём ребёнка
+            Child child = new Child("Анна", "Иванова", Gender.Female, 8,
+                adult2, adult1, "Школа №15");
 
-            list2.Add(new Person("Николай", "Казначеев", 25, Gender.Male));
-            list2.Add(new Person("Роман", "Иванов", 30, Gender.Male));
-            list2.Add(new Person("Анастасия", "Петрова", 48, Gender.Female));
-            WaitForKey(); 
+            // Выводим информацию — метод НЕ выводит сам, только возвращает строку!
+            Console.WriteLine("=== Взрослый ===");
+            Console.WriteLine(adult2.GetInfo());  // ← только получение строки
 
-            // Вывод содержимого каждого списка
-            PrintList(list1, "Список 1");
-            PrintList(list2, "Список 2");
-            WaitForKey();
+            Console.WriteLine("\n=== Ребёнок ===");
+            Console.WriteLine(child.GetInfo());
 
-            // Добавление нового человека в первый список
-            Person newPerson = new Person("Валерия", "Андреева", 23, Gender.Female);
-            list1.Add(newPerson);
-            Console.WriteLine("\nПосле добавления нового человека в первый список:");
-            PrintList(list1, "Список 1");
-            WaitForKey();
-
-            // Копирование второго человека из первого списка во второй список
-            Person personCopy = list1.Get(1);
-            list2.Add(personCopy);
-            Console.WriteLine($"Скопирован человек: " +
-                $"{personCopy.Name} {personCopy.Surname}");
-            PrintList(list1, "Список 1 (после копирования)");
-            PrintList(list2, "Список 2 (после копирования)");
-            WaitForKey();
-
-            // Удаление второго человека из первого списка
-            list1.RemoveAt(1);
-            Console.WriteLine("Второй человек удален из первого списка.");
-            PrintList(list1, "Список 1 (после удаления)");
-            PrintList(list2, "Список 2 (после удаления из первого списка)");
-            WaitForKey();
-
-            // Отчистка второго списка
-            list2.Clear();
-            Console.WriteLine("Второй список очищен.");
-            PrintList(list2, "Список 2 (после очистки)");
-            WaitForKey();
-
-            // Ввод, добавление в список, вывод
-            Console.WriteLine("\nДобавим человека вручную в Список 1:");
-            Person personFromConsole = ReadFromConsole();
-            list1.Add(personFromConsole);
-            Console.WriteLine("\nВ Список 1 добавлен человек:");
-            PrintPerson(personFromConsole);
-            PrintList(list1, "Список 1 после добавления");
-            WaitForKey();
-
-            // Создание случайного человека
-            Person randomPerson = RandomPerson.GetRandomPerson();
-            Console.WriteLine("\nСоздан случайный человек:");
-            PrintPerson(randomPerson);
-            WaitForKey();
         }
 
         /// <summary>
@@ -119,7 +75,7 @@ namespace lb1
         /// </summary>
         /// <returns>возвращает объект класса Person</returns>
         /// <exception cref="Exception">создание при неверном вводе</exception>
-        public static Person ReadFromConsole()
+        /*public static Person ReadFromConsole()
         {
             var person = new Person();
 
@@ -188,7 +144,7 @@ namespace lb1
             }
 
             return person;
-        }
+        }*/
 
         /// <summary>
         /// При возникновении исключения выводит сообщение и повторяет ввод.
