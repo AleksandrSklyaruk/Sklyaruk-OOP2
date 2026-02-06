@@ -28,14 +28,33 @@ namespace Model
         /// </summary>
         private string _workPlace;
 
+        /// <summary>
+        /// Партнёр
+        /// </summary>
+        private Adult _partner;
+
+        /// <summary>
+        /// Конструктор класса с параметрами
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="gender">Пол</param>
+        /// <param name="passportSeria">Серия паспорта</param>
+        /// <param name="passportNumber">Номер паспорта</param>
+        /// <param name="maritalStatus">Семейное положение</param>
+        /// <param name="workPlace">Место работы</param>
+        /// <param name="partner">Партнёр</param>
         public Adult(string name, string surname, int age, Gender gender, 
-            int passportSeria, int passportNumber, MaritalStatus maritalStatus, string workPlace) : 
+            int passportSeria, int passportNumber, MaritalStatus maritalStatus, 
+            string workPlace, Adult partner = null) : 
             base(name, surname, age, gender) 
         {
             PassportSeria = passportSeria;
             PassportNumber = passportNumber;
             MaritalStatus = maritalStatus;
             WorkPlace = workPlace;
+            Partner = partner;
         }
 
         /// <summary>
@@ -114,6 +133,14 @@ namespace Model
         {
             get { return _maritalStatus; }
             set { _maritalStatus = value; }
+        }
+
+
+
+        public Adult Partner
+        {
+            get { return _partner; }
+            set { _partner = value; }
         }
 
         /// <summary>
