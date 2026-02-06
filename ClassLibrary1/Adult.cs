@@ -135,8 +135,9 @@ namespace Model
             set { _maritalStatus = value; }
         }
 
-
-
+        /// <summary>
+        /// Свойство позволяет получить или установить партнёра 
+        /// </summary>
         public Adult Partner
         {
             get { return _partner; }
@@ -150,6 +151,35 @@ namespace Model
         {
             get { return _workPlace; }
             set { _workPlace = value; }
+        }
+
+        /// <summary>
+        /// Возвращает строковое описание взрослого человека
+        /// </summary>
+        public override string GetInfo()
+        {
+            string baseInfo = $"Фамилия: {Surname}, " +
+                $"Имя: {Name}, " + $"возраст: {Age}, " +
+                $"пол: {(Gender == Gender.Male ? "мужской" : "женский")}";
+            string passportInfo = $"паспорт: серия {PassportSeria} №{PassportNumber}";
+            string maritalInfo;
+            if (MaritalStatus == MaritalStatus.Married && Partner != null)
+            {
+                maritalInfo = $"семейное положение: женат(замужем) " +
+                    $"на(за) {Partner.Surname} {Partner.Name}";
+            }
+            else if (MaritalStatus == MaritalStatus.Married && Partner == null)
+            {
+                maritalInfo = "семейное положение: женат(замужем) [партнёр не указан]";
+            }
+            else
+            {
+                maritalInfo = "семейное положение: не женат(не замужем)";
+            }
+            string workInfo = string.IsNullOrWhiteSpace(WorkPlace)
+                ? "место работы: Безработный"
+                : $"место работы: {WorkPlace}";
+            return $"{baseInfo}, {passportInfo}, {maritalInfo}, {workInfo}";
         }
     }
 
