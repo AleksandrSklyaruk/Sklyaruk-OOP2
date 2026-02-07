@@ -39,7 +39,7 @@ namespace Model
                 ? surnamesMale[random.Next(surnamesMale.Length)]
                 : surnamesFemale[random.Next(surnamesFemale.Length)];
 
-            int age = random.Next(18, Person.MaxAge + 1);
+            int age = random.Next(18, 123 + 1);
 
             int passportSeria = random.Next(Adult.MinPassportSeria, 
                 Adult.MaxPassportSeria + 1);
@@ -68,7 +68,7 @@ namespace Model
                     : surnamesFemale[random.Next(surnamesFemale.Length)];
 
                 partner = new Adult( partnerName, partnerSurname, 
-                    random.Next(18, Person.MaxAge + 1), partnerGender, 
+                    random.Next(18, 123 + 1), partnerGender, 
                     random.Next(Adult.MinPassportSeria, 
                     Adult.MaxPassportSeria + 1), 
                     random.Next(Adult.MinPassportNumber, 
