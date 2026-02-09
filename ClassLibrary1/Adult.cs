@@ -55,6 +55,7 @@ namespace Model
             MaritalStatus = maritalStatus;
             WorkPlace = workPlace;
             Partner = partner;
+            _minAge = 18;
         }
 
         /// <summary>
@@ -158,28 +159,27 @@ namespace Model
         /// </summary>
         public override string GetInfo()
         {
-            string baseInfo = $"Фамилия: {Surname}, " +
-                $"Имя: {Name}, " + $"возраст: {Age}, " +
-                $"пол: {(Gender == Gender.Male ? "мужской" : "женский")}";
-            string passportInfo = $"паспорт: серия {PassportSeria} №{PassportNumber}";
+            string baseInfo = $" {Surname} {Name}\n возраст: {Age}\n" +
+                $" пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
+            string passportInfo = $" паспорт: серия {PassportSeria} номер {PassportNumber}\n";
             string maritalInfo;
             if (MaritalStatus == MaritalStatus.Married && Partner != null)
             {
-                maritalInfo = $"семейное положение: женат(замужем) " +
-                    $"на(за) {Partner.Surname} {Partner.Name}";
+                maritalInfo = $" семейное положение: женат(замужем) " +
+                    $" на(за) {Partner.Surname} {Partner.Name}\n";
             }
             else if (MaritalStatus == MaritalStatus.Married && Partner == null)
             {
-                maritalInfo = "семейное положение: женат(замужем) [партнёр не указан]";
+                maritalInfo = " семейное положение: женат(замужем) [партнёр не указан]\n";
             }
             else
             {
-                maritalInfo = "семейное положение: не женат(не замужем)";
+                maritalInfo = " семейное положение: не женат(не замужем)\n";
             }
             string workInfo = string.IsNullOrWhiteSpace(WorkPlace)
-                ? "место работы: Безработный"
-                : $"место работы: {WorkPlace}";
-            return $"{baseInfo}, {passportInfo}, {maritalInfo}, {workInfo}";
+                ? " место работы: Безработный(ая)"
+                : $" место работы: {WorkPlace}";
+            return $"{baseInfo}{passportInfo}{maritalInfo}{workInfo}";
         }
     }
 

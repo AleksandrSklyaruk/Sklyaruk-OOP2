@@ -79,12 +79,15 @@ namespace Model
         /// <summary>
         /// Минимальный возраст человека
         /// </summary>
-        public const int MinAge = 0;
+        protected int _minAge = 0;
 
         /// <summary>
         /// Максимальный возраст человека
         /// </summary>
-        public const int MaxAge = 123;
+        protected int _maxAge = 123;
+
+        public virtual int MinAge => _minAge;
+        public virtual int MaxAge => _maxAge;
 
         /// <summary>
         /// Проверка корректности ввода возраста
@@ -94,17 +97,17 @@ namespace Model
             get { return _age; }
             set
             {
-                if (string.IsNullOrEmpty(Convert.ToString(value)))
+                if (value >= MinAge && value <= MaxAge)
                 {
-                    throw new Exception("Введите возраст!");
+                    _age = value;
                 }
-
-                if (value < MinAge || value > MaxAge)
+                else
                 {
-                    throw new Exception($"{nameof(Age)} должен быть в дипазоне" +
-                        $" от {MinAge} до {MaxAge}");
+                    throw new IndexOutOfRangeException(
+                        $"Поле не может быть пустым. " +
+                        $"Возраст должен находиться " +
+                        $"в пределах от {MinAge} года до {MaxAge} лет");
                 }
-                _age = value;
             }
         }
 

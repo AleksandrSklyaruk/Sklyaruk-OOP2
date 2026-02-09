@@ -15,182 +15,92 @@ namespace lb1
         /// <param name="args">аргумент</param>
         public static void Main(string[] args)
         {
-            // Создаём свой генератор случайных чисел для выбора типа персоны
-            // (это НЕ нарушает инкапсуляцию — мы не лезем в приватные поля RandomPerson)
-            Random random = new Random();
-
-            // Создаём список людей
             PersonList list = new PersonList();
-
-            // Заполняем список 7 случайными людьми
+            Random random = new Random();
             for (int i = 0; i < 7; i++)
             {
-                // Случайно выбираем: взрослый (0) или ребёнок (1)
                 if (random.Next(2) == 0)
                 {
                     list.Add(RandomPerson.GetRandomAdult());
+                    Console.WriteLine($"{i + 1} Добавлен взрослый");
                 }
                 else
                 {
                     list.Add(RandomPerson.GetRandomChild());
+                    Console.WriteLine($"{i + 1} Добавлен ребёнок");
                 }
             }
+            Console.ReadKey();
 
-            // Выводим информацию о каждом человеке через полиморфизм
-            Console.WriteLine("=== Список из 7 случайных людей ===\n");
+            // Выводим описание всех людей через полиморфизм
+            Console.WriteLine("\nСписок всех людей:");
             for (int i = 0; i < list.Count; i++)
             {
-                Console.WriteLine($"--- Человек #{i + 1} ---");
+                Console.WriteLine($"\n----------Человек #{i + 1}----------");
                 Console.WriteLine(list.Get(i).GetInfo());
-                Console.WriteLine();
             }
+            Console.ReadKey();
 
-            // Определяем тип 4-го человека в списке (индекс 3)
+
+            //Определяем тип 4-го человека (индекс 3) и вызываем специфичный метод
+            Console.WriteLine("\nОпределение типа 4-го человека в списке:");
             Person person4 = list.Get(3);
-            Console.WriteLine("=== Тип 4-го человека в списке ===");
-            if (person4 is Adult)
+
+            if (person4 is Adult adult4)
             {
                 Console.WriteLine("Четвёртый человек — взрослый (Adult)");
+                Console.WriteLine($"Имя: {adult4.Name}, " +
+                    $"Фамилия: {adult4.Surname}, возраст: {adult4.Age}");
+
+                // Демонстрация специфичного метода/поля для Adult
+                if (adult4.Partner != null)
+                {
+                    Console.WriteLine($"Партнёр: {adult4.Partner.Name} " +
+                        $"{adult4.Partner.Surname}");
+                }
+                else
+                {
+                    Console.WriteLine("Партнёр: отсутствует");
+                }
+
+                Console.WriteLine($"Место работы: " +
+                    $"{(string.IsNullOrWhiteSpace(adult4.WorkPlace) 
+                    ? "Безработный" 
+                    : adult4.WorkPlace)}");
             }
-            else if (person4 is Child)
+            else if (person4 is Child child4)
             {
                 Console.WriteLine("Четвёртый человек — ребёнок (Child)");
+                Console.WriteLine($"Имя: {child4.Name}, " +
+                    $"Фамилия: {child4.Surname}, возраст: {child4.Age}");
+
+                // Демонстрация специфичного метода/поля для Child
+                if (child4.Father != null)
+                {
+                    Console.WriteLine($"   Отец: {child4.Father.Name} " +
+                        $"{child4.Father.Surname}");
+                }
+                else
+                {
+                    Console.WriteLine("Отец: не указан");
+                }
+
+                if (child4.Mother != null)
+                {
+                    Console.WriteLine($"Мать: {child4.Mother.Name} " +
+                        $"{child4.Mother.Surname}");
+                }
+                else
+                {
+                    Console.WriteLine("Мать: не указана");
+                }
+
+                Console.WriteLine($"Школа: " +
+                    $"{(string.IsNullOrWhiteSpace(child4.School) 
+                    ? "не учится" 
+                    : child4.School)}");
             }
-
-        }
-
-        /// <summary>
-        /// Метод для вывода списка людей на консоль с указанным заголовком
-        /// </summary>
-        /// <param name="list">Список для вывода</param>
-        /// <param name="listName">Заголовок списка</param>
-        private static void PrintList(PersonList list, string listName)
-        {
-            Console.WriteLine($"\n{listName}:");
-            for (int i = 0; i < list.Count; i++)
-            {
-                PrintPerson(list.Get(i));
-            }
-        }
-
-        /// <summary>
-        /// Метод для вывода информации об одном человеке
-        /// </summary>
-        /// <param name="person">Объект Person для вывода</param>
-        private static void PrintPerson(Person person)
-        {
-            string genderStr = person.Gender 
-                == Gender.Male ? "Мужской" : "Женский";
-            Console.WriteLine($"{person.Name} {person.Surname}," +
-                $" возраст: {person.Age}, пол: {genderStr}");
-        }
-
-        /// <summary>
-        /// Метод для паузы между пунктами программы
-        /// </summary>
-        private static void WaitForKey()
-        {
-            Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить...");
             Console.ReadKey();
-        }
-
-        /// <summary>
-        /// Ввод пользователя с консоли.
-        /// </summary>
-        /// <returns>возвращает объект класса Person</returns>
-        /// <exception cref="Exception">создание при неверном вводе</exception>
-        /*public static Person ReadFromConsole()
-        {
-            var person = new Person();
-
-            var actionDictionary = new Dictionary<string, Action>()
-            {
-                {
-                    "имя",
-                    new Action(() =>
-                    {
-                        person.Name = Console.ReadLine();
-                    })
-                },
-                {
-                    "фамилию",
-                    new Action(() =>
-                    {
-                        person.Surname = Console.ReadLine();
-                        })
-                },
-                {
-                    "возраст",
-                    new Action(() =>
-                    {
-                        if (int.TryParse(Console.ReadLine(), out int age))
-                        {
-                            person.Age = age;
-                        }
-                        else
-                        {
-                            throw new Exception("Введённая строка " +
-                                "не может быть преобразована в число");
-                        }
-                    })
-                },
-                {
-                    "пол (1 — Мужчина, 2 — Женщина)",
-                    new Action(() =>
-                    {
-                        string input = Console.ReadLine();
-                        switch (input)
-                        {
-                            case "1":
-                            {
-                                person.Gender = Gender.Male;
-                                break;
-                            }
-                            case "2":
-                            {
-                                person.Gender = Gender.Female;
-                                break;
-                            }
-                            default:
-                            {
-                                throw new Exception("Некорректный ввод" +
-                                    " Введите 1 или 2.");
-                            }
-
-                        }
-                    })
-                }
-            };
-
-            foreach (var actionHandler in actionDictionary)
-            {
-                ActionHandler(actionHandler.Value, actionHandler.Key);
-            }
-
-            return person;
-        }*/
-
-        /// <summary>
-        /// При возникновении исключения выводит сообщение и повторяет ввод.
-        /// </summary>
-        /// <param name="action">Действие, ввод и присваивание</param>
-        /// <param name="fieldName">Название поля</param>
-        private static void ActionHandler(Action action, string fieldName)
-        {
-            while (true)
-            {
-                try
-                {
-                    Console.Write($"Введите {fieldName}: ");
-                    action.Invoke();
-                    return;
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine($" Ошибка: {exception.Message}" +
-                        $" Попробуйте снова.");
-                }
-            }
         }
     }
 }

@@ -30,6 +30,7 @@ namespace Model
             Father = father;
             Mother = mother;
             School = school;
+            _maxAge = 17;
         }
 
         /// <summary>
@@ -64,18 +65,18 @@ namespace Model
         /// </summary>
         public override string GetInfo()
         {
-            string baseInfo = $"Фамилия: {Surname}, Имя: {Name}, возраст: {Age}," +
-                $" пол: {(Gender == Gender.Male ? "мужской" : "женский")}";
+            string baseInfo = $" {Surname} {Name}\n возраст: {Age}\n" +
+                $" пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
             string fatherInfo = Father != null
-                ? $"отец: {Father.Surname} {Father.Name}"
-                : "отец: не указан";
+                ? $" отец: {Father.Surname} {Father.Name}\n"
+                : " отец: не указан\n";
             string motherInfo = Mother != null
-                ? $"мать: {Mother.Surname} {Mother.Name}"
-                : "мать: не указана";
+                ? $" мать: {Mother.Surname} {Mother.Name}\n"
+                : " мать: не указана\n";
             string schoolInfo = string.IsNullOrWhiteSpace(School)
-                ? "учебное заведение: не указано"
-                : $"учебное заведение: {School}";
-            return $"{baseInfo}, {fatherInfo}, {motherInfo}, {schoolInfo}";
+                ? " учебное заведение: не указано\n"
+                : $" учебное заведение: {School}\n";
+            return $"{baseInfo}{fatherInfo}{motherInfo}{schoolInfo}";
         }
     }
 }
