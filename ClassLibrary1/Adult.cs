@@ -159,26 +159,22 @@ namespace Model
         /// </summary>
         public override string GetInfo()
         {
-            string baseInfo = $" {Surname} {Name}\n возраст: {Age}\n" +
-                $" пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
-            string passportInfo = $" паспорт: серия {PassportSeria} номер {PassportNumber}\n";
+            string baseInfo = $" {Surname} {Name}\n Возраст: {Age}\n" +
+                $" Пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
+            string passportInfo = $" Паспорт: серия {PassportSeria} номер {PassportNumber}\n";
             string maritalInfo;
             if (MaritalStatus == MaritalStatus.Married && Partner != null)
             {
-                maritalInfo = $" семейное положение: женат(замужем) " +
-                    $" на(за) {Partner.Surname} {Partner.Name}\n";
-            }
-            else if (MaritalStatus == MaritalStatus.Married && Partner == null)
-            {
-                maritalInfo = " семейное положение: женат(замужем) [партнёр не указан]\n";
+                maritalInfo = $" Состоит в браке с: " +
+                    $"{Partner.Surname} {Partner.Name}\n";
             }
             else
             {
-                maritalInfo = " семейное положение: не женат(не замужем)\n";
+                maritalInfo = " Не состоит в браке\n";
             }
             string workInfo = string.IsNullOrWhiteSpace(WorkPlace)
-                ? " место работы: Безработный(ая)"
-                : $" место работы: {WorkPlace}";
+                ? " Место работы: Безработный(ая)"
+                : $" Место работы: {WorkPlace}";
             return $"{baseInfo}{passportInfo}{maritalInfo}{workInfo}";
         }
     }

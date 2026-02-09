@@ -65,17 +65,17 @@ namespace Model
         /// </summary>
         public override string GetInfo()
         {
-            string baseInfo = $" {Surname} {Name}\n возраст: {Age}\n" +
-                $" пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
+            string baseInfo = $" {Surname} {Name}\n Возраст: {Age}\n" +
+                $" Пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
             string fatherInfo = Father != null
-                ? $" отец: {Father.Surname} {Father.Name}\n"
-                : " отец: не указан\n";
+                ? $" Отец: {Father.Surname} {Father.Name}\n"
+                : " Отец: не указан\n";
             string motherInfo = Mother != null
-                ? $" мать: {Mother.Surname} {Mother.Name}\n"
-                : " мать: не указана\n";
+                ? $" Мать: {Mother.Surname} {Mother.Name}\n"
+                : " Мать: не указана\n";
             string schoolInfo = string.IsNullOrWhiteSpace(School)
-                ? " учебное заведение: не указано\n"
-                : $" учебное заведение: {School}\n";
+                ? " Учебное заведение: не указано\n"
+                : $" Учебное заведение: {School}\n";
             return $"{baseInfo}{fatherInfo}{motherInfo}{schoolInfo}";
         }
     }
