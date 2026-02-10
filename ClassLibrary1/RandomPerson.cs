@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Model
 {
@@ -10,7 +11,7 @@ namespace Model
         /// <summary>
         /// Генерирует случайного взрослого человека
         /// </summary>
-        public static Adult GetRandomAdult()
+        public static Adult GetRandomAdult(Gender gender)
         {
             Random random = new Random();
 
@@ -24,13 +25,10 @@ namespace Model
             string[] surnamesFemale = { "Иванова", "Смирнова", "Кузнецова", 
                 "Попова", "Соколова", "Лебедева", "Морозова", "Волкова" };
 
-            string[] workPlaces = { "ТГУ", "Сбербанк", "Яндекс", "Газпром", 
+            string[] workPlaces = { "СО ЕЭС", "Сбербанк", "Яндекс", "Газпром", 
                 "РЖД", "" };
 
-            Gender gender = random.Next(2) == 0 
-                ? Gender.Male 
-                : Gender.Female;
-
+            // Используем переданный параметр пола (без случайной генерации!)
             string name = gender == Gender.Male
                 ? maleNames[random.Next(maleNames.Length)]
                 : femaleNames[random.Next(femaleNames.Length)];
@@ -64,8 +62,8 @@ namespace Model
                     : femaleNames[random.Next(femaleNames.Length)];
 
                 string partnerSurname = partnerGender == Gender.Male
-                    ? surnamesMale[random.Next(surnamesMale.Length)]
-                    : surnamesFemale[random.Next(surnamesFemale.Length)];
+                    ? RemoveLastSimvol(surname)
+                    : surname + "а";
 
                 partner = new Adult( partnerName, partnerSurname, 
                     random.Next(18, 123 + 1), partnerGender, 
@@ -79,6 +77,16 @@ namespace Model
 
             return new Adult( name, surname, age, gender, passportSeria, 
                 passportNumber, maritalStatus, workPlace, partner );
+        }
+
+        /// <summary>
+        /// Генерирует случайного взрослого человека (любой пол)
+        /// </summary>
+        public static Adult GetRandomAdult()
+        {
+            Random random = new Random();
+            Gender gender = random.Next(2) == 0 ? Gender.Male : Gender.Female;
+            return GetRandomAdult(gender);
         }
 
         /// <summary>
@@ -118,28 +126,63 @@ namespace Model
             Adult father = null;
             Adult mother = null;
 
+            // Генерируем ОТЦА только как мужчину
             if (random.Next(2) == 0)
             {
-                father = GetRandomAdult();
+                father = GetRandomAdult(Gender.Male);  // ← ВСЕГДА мужчина
             }
 
+            // Генерируем МАТЬ только как женщину
             if (random.Next(2) == 0)
             {
-                mother = GetRandomAdult();
+                mother = GetRandomAdult(Gender.Female);  // ← ВСЕГДА женщина
+            }
+
+            if (father != null && mother != null) 
+            {
+                mother.Surname = father.Surname + "а";
             }
 
             if (father != null)
             {
-                surname = father.Surname;
+                if (gender == Gender.Female)
+                {
+                    surname = father.Surname + "а";
+                }
+                else
+                {
+                    surname = father.Surname;
+                }
             }
             else if (mother != null)
             {
-                surname = mother.Surname;
+                if (gender == Gender.Male)
+                {
+                    surname = RemoveLastSimvol(mother.Surname);
+                }
+                else
+                {
+                    surname = mother.Surname;
+                }
             }
 
             string school = schools[random.Next(schools.Length)];
 
             return new Child( name, surname, gender, age, father, mother, school );
+        }
+        /// <summary>
+        /// Метод удаляет последний символ слова
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        protected static string RemoveLastSimvol(string word)
+        {
+            string correctWord = "";
+            for (int i = 0; i < word.Length - 1; i++)
+            {
+                correctWord = correctWord + word[i];
+            }
+            return correctWord;
         }
     }
 }

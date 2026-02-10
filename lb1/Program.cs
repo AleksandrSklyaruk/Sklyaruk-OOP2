@@ -42,7 +42,7 @@ namespace lb1
             WaitKey();
 
             //Определяем тип 4-го человека (индекс 3) и вызываем специфичный метод
-            Console.WriteLine("\nОпределение типа 4-го человека в списке:");
+            Console.WriteLine("\nОпределение типа 4-го человека в списке:\n");
             Person person4 = list.Get(3);
 
             if (person4 is Adult adult4)
@@ -54,8 +54,8 @@ namespace lb1
                 // Демонстрация специфичного метода/поля для Adult
                 if (adult4.Partner != null)
                 {
-                    Console.WriteLine($" Партнёр: {adult4.Partner.Surname} " +
-                        $"{adult4.Partner.Name}");
+                    Console.WriteLine($" Состоит в браке с: " +
+                        $"{adult4.Partner.Surname} {adult4.Partner.Name}");
                 }
                 else
                 {
@@ -73,7 +73,6 @@ namespace lb1
                 Console.WriteLine($" {child4.Surname} {child4.Name}\n " +
                     $"возраст: {child4.Age}");
 
-                // Демонстрация специфичного метода/поля для Child
                 if (child4.Father != null)
                 {
                     Console.WriteLine($" Отец: {child4.Father.Surname} " +
@@ -101,6 +100,9 @@ namespace lb1
             }
             WaitKey();
         }
+        /// <summary>
+        /// Метод для ожидания действий пользователя
+        /// </summary>
         private static void WaitKey()
         {
             Console.WriteLine("\nНажмите любую клавишу...");
