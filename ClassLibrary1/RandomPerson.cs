@@ -28,7 +28,6 @@ namespace Model
             string[] workPlaces = { "СО ЕЭС", "Сбербанк", "Яндекс", "Газпром", 
                 "РЖД", "" };
 
-            // Используем переданный параметр пола (без случайной генерации!)
             string name = gender == Gender.Male
                 ? maleNames[random.Next(maleNames.Length)]
                 : femaleNames[random.Next(femaleNames.Length)];
@@ -126,16 +125,14 @@ namespace Model
             Adult father = null;
             Adult mother = null;
 
-            // Генерируем ОТЦА только как мужчину
             if (random.Next(2) == 0)
             {
-                father = GetRandomAdult(Gender.Male);  // ← ВСЕГДА мужчина
+                father = GetRandomAdult(Gender.Male);
             }
 
-            // Генерируем МАТЬ только как женщину
             if (random.Next(2) == 0)
             {
-                mother = GetRandomAdult(Gender.Female);  // ← ВСЕГДА женщина
+                mother = GetRandomAdult(Gender.Female);
             }
 
             if (father != null && mother != null) 
@@ -168,12 +165,13 @@ namespace Model
 
             string school = schools[random.Next(schools.Length)];
 
-            return new Child( name, surname, gender, age, father, mother, school );
+            return new Child( name, surname, gender, 
+                age, father, mother, school );
         }
         /// <summary>
         /// Метод удаляет последний символ слова
         /// </summary>
-        /// <param name="word"></param>
+        /// <param name="word">фамилия</param>
         /// <returns></returns>
         protected static string RemoveLastSimvol(string word)
         {

@@ -107,8 +107,9 @@ namespace Model
 
                 if (value < MinPassportSeria || value > MaxPassportSeria)
                 {
-                    throw new Exception($"{nameof(PassportSeria)} должен быть в дипазоне" +
-                        $" от {MinPassportSeria} до {MaxPassportSeria}");
+                    throw new Exception($"{nameof(PassportSeria)}" +
+                        $"должен быть в дипазоне от " +
+                        $"{MinPassportSeria} до {MaxPassportSeria}");
                 }
                 _passportSeria = value;
             }
@@ -129,8 +130,9 @@ namespace Model
 
                 if (value < MinPassportNumber || value > MaxPassportNumber)
                 {
-                    throw new Exception($"{nameof(PassportNumber)} должен быть в дипазоне" +
-                        $" от {MinPassportNumber} до {MaxPassportNumber}");
+                    throw new Exception($"{nameof(PassportNumber)} " +
+                        $"должен быть в дипазоне от " +
+                        $"{MinPassportNumber} до {MaxPassportNumber}");
                 }
                 _passportNumber = value;
             }
@@ -170,7 +172,8 @@ namespace Model
         {
             string baseInfo = $" {Surname} {Name}\n Возраст: {Age}\n" +
                 $" Пол: {(Gender == Gender.Male ? "мужской" : "женский")}\n";
-            string passportInfo = $" Паспорт: серия {PassportSeria} номер {PassportNumber}\n";
+            string passportInfo = $" Паспорт: серия {PassportSeria} " +
+                $"номер {PassportNumber}\n";
             string maritalInfo;
             if (MaritalStatus == MaritalStatus.Married && Partner != null)
             {
@@ -211,7 +214,7 @@ namespace Model
             string[] cars = { "Lada", "Moskvich", "UAZ", "Volga", "Aurus" };
             var random = new Random();
             string car = cars[random.Next(cars.Length)];
-            return $"Это взрослый человек и он ездит на {car}";
+            return $"Это взрослый человек, и он ездит на {car}";
         }
     }
 

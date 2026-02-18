@@ -30,18 +30,18 @@ namespace lb1
                     Console.WriteLine($"{i + 1} Добавлен ребёнок");
                 }
             }
+
             WaitKey();
 
-            // Выводим описание всех людей через полиморфизм
             Console.WriteLine("\nСписок всех людей:");
             for (int i = 0; i < list.Count; i++)
             {
                 Console.WriteLine($"\n----------Человек #{i + 1}----------");
                 Console.WriteLine(list.Get(i).GetInfo());
             }
+
             WaitKey();
 
-            //Определяем тип 4-го человека (индекс 3) и вызываем специфичный метод
             Console.WriteLine("\nОпределение типа 4-го человека:\n");
 
             var person = list.Get(3);
@@ -66,6 +66,7 @@ namespace lb1
 
             WaitKey();
         }
+
         /// <summary>
         /// Метод для ожидания действий пользователя
         /// </summary>

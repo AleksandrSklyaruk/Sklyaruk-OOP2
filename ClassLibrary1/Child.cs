@@ -109,10 +109,11 @@ namespace Model
         /// <returns></returns>
         public string GetGame()
         {
-            string[] games = { "Red Alert 2", "Postal 2", "Heroes III", "GTA 4", "Mafia" };
+            string[] games = { "Red Alert 2", "Postal 2", 
+                "Heroes III", "GTA 4", "Mafia" };
             var random = new Random();
             string game = games[random.Next(games.Length)];
-            return $"Это ребёнок и он любит играть в {game}";
+            return $"Это ребёнок, и он любит играть в {game}";
         }
     }
 }

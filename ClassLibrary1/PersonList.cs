@@ -33,46 +33,12 @@ namespace Model
         }
 
         /// <summary>
-        /// Удалить указанного человека из списка
-        /// </summary>
-        public void Remove(PersonBase person)
-        {
-            _persons.Remove(person);
-        }
-
-        /// <summary>
-        /// Удалить человека из списка по его индексу
-        /// </summary>
-        public void RemoveAt(int index)
-        {
-            validateIndex(index);
-            _persons.RemoveAt(index);
-        }
-
-        /// <summary>
         /// Вернуть человека из списка по его индексу
         /// </summary>
         public PersonBase Get(int index)
         {
             validateIndex(index);
             return _persons[index];
-        }
-
-        /// <summary>
-        /// Вернуть индекс указанного человека в списке
-        /// Если человек не найден, вернуть -1
-        /// </summary>
-        public int IndexOf(PersonBase person)
-        {
-            return _persons.IndexOf(person);
-        }
-
-        /// <summary>
-        /// Очистить список, удалив всех людей
-        /// </summary>
-        public void Clear()
-        {
-            _persons.Clear();
         }
 
         /// <summary>
