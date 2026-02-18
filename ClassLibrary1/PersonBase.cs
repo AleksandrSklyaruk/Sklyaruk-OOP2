@@ -13,7 +13,7 @@ namespace Model
     /// <summary>
     /// Хранение и обработка данных о человеке
     /// </summary>
-    public abstract class Person
+    public abstract class PersonBase
     {
         /// <summary>
         /// Имя
@@ -42,7 +42,7 @@ namespace Model
         /// <param name="Surname">Фамилия человека</param>
         /// <param name="Age">Количество лет</param>
         /// <param name="Gender">Пол человека</param>
-        public Person(string name, string surname, int age, Gender gender)
+        public PersonBase(string name, string surname, int age, Gender gender)
         {
             Name = name;
             Surname = surname;
@@ -79,15 +79,12 @@ namespace Model
         /// <summary>
         /// Минимальный возраст человека
         /// </summary>
-        protected int _minAge = 0;
+        public const int MinAge = 0;
 
         /// <summary>
         /// Максимальный возраст человека
         /// </summary>
-        protected int _maxAge = 123;
-
-        public virtual int MinAge => _minAge;
-        public virtual int MaxAge => _maxAge;
+        public const int MaxAge = 123;
 
         /// <summary>
         /// Проверка корректности ввода возраста
@@ -187,10 +184,16 @@ namespace Model
         /// </summary>
         /// <returns></returns>
         public abstract string GetInfo();
-
+        
+        /// <summary>
+        /// Абстрактный метод проверки возраста
+        /// </summary>
+        /// <param name="age">Возраст человека</param>
+        protected abstract void CheckAge(int age);
+        
         /// <summary>
         /// Создание нового экземпляра класса Person по умолчанию.
         /// </summary>
-        public Person() { }
+        public PersonBase() { }
     }
 }

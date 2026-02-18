@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model 
 {
-    public class Adult : Person
+    public class Adult : PersonBase
     {
         /// <summary>
         /// Серия паспорта
@@ -34,36 +34,6 @@ namespace Model
         private Adult _partner;
 
         /// <summary>
-        /// Конструктор класса с параметрами
-        /// </summary>
-        /// <param name="name">Имя</param>
-        /// <param name="surname">Фамилия</param>
-        /// <param name="age">Возраст</param>
-        /// <param name="gender">Пол</param>
-        /// <param name="passportSeria">Серия паспорта</param>
-        /// <param name="passportNumber">Номер паспорта</param>
-        /// <param name="maritalStatus">Семейное положение</param>
-        /// <param name="workPlace">Место работы</param>
-        /// <param name="partner">Партнёр</param>
-        public Adult(string name, string surname, int age, Gender gender, 
-            int passportSeria, int passportNumber, MaritalStatus maritalStatus, 
-            string workPlace, Adult partner = null) : 
-            base(name, surname, age, gender) 
-        {
-            PassportSeria = passportSeria;
-            PassportNumber = passportNumber;
-            MaritalStatus = maritalStatus;
-            WorkPlace = workPlace;
-            Partner = partner;
-            _minAge = 18;
-        }
-
-        /// <summary>
-        /// Конструктор по умолчанию
-        /// </summary>
-        public Adult() { }
-
-        /// <summary>
         /// Минимальная серия паспорта
         /// </summary>
         public const int MinPassportSeria = 1000;
@@ -84,6 +54,45 @@ namespace Model
         public const int MaxPassportNumber = 999999;
 
         /// <summary>
+        /// Минимальный возраст взрослого человека
+        /// </summary>
+        private const int MinAge = 18;
+
+        /// <summary>
+        /// Максимальный возраст взрослого человека
+        /// </summary>
+        private const int MaxAge = 123;
+
+        /// <summary>
+        /// Конструктор класса с параметрами
+        /// </summary>
+        /// <param name="name">Имя</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="age">Возраст</param>
+        /// <param name="gender">Пол</param>
+        /// <param name="passportSeria">Серия паспорта</param>
+        /// <param name="passportNumber">Номер паспорта</param>
+        /// <param name="maritalStatus">Семейное положение</param>
+        /// <param name="workPlace">Место работы</param>
+        /// <param name="partner">Партнёр</param>
+        public Adult(string name, string surname, int age, Gender gender,
+            int passportSeria, int passportNumber, MaritalStatus maritalStatus,
+            string workPlace, Adult partner = null) :
+            base(name, surname, age, gender)
+        {
+            PassportSeria = passportSeria;
+            PassportNumber = passportNumber;
+            MaritalStatus = maritalStatus;
+            WorkPlace = workPlace;
+            Partner = partner;
+        }
+
+        /// <summary>
+        /// Конструктор по умолчанию
+        /// </summary>
+        public Adult() { }
+
+        /// <summary>
         /// Свойство позволяет получить или установить серию паспорта
         /// </summary>
         public int PassportSeria
@@ -93,7 +102,7 @@ namespace Model
             {
                 if (string.IsNullOrEmpty(Convert.ToString(value)))
                 {
-                    throw new Exception("Введите номер серии!");
+                    throw new Exception("Введите серию паспорта!");
                 }
 
                 if (value < MinPassportSeria || value > MaxPassportSeria)
@@ -155,7 +164,7 @@ namespace Model
         }
 
         /// <summary>
-        /// Возвращает строковое описание взрослого человека
+        /// Метод возвращает строковое описание взрослого человека
         /// </summary>
         public override string GetInfo()
         {
@@ -176,6 +185,33 @@ namespace Model
                 ? " Место работы: Безработный(ая)"
                 : $" Место работы: {WorkPlace}";
             return $"{baseInfo}{passportInfo}{maritalInfo}{workInfo}";
+        }
+
+        /// <summary>
+        /// Проверка человека на взрослость
+        /// </summary>
+        /// <param name="age">Возраст человека</param>
+        /// <exception cref="Exception">Возраст должен быть 
+        /// в определнном диапозоне</exception>
+        protected override void CheckAge(int age)
+        {
+            if ((age < MinAge) || (age > MaxAge))
+            {
+                throw new Exception($"Возраст взрослого человека " +
+                    $"от {MinAge} до {MaxAge}");
+            }
+        }
+
+        /// <summary>
+        /// Специальны метод для взрослого человека
+        /// </summary>
+        /// <returns></returns>
+        public string GetCar()
+        {
+            string[] cars = { "Lada", "Moskvich", "UAZ", "Volga", "Aurus" };
+            var random = new Random();
+            string car = cars[random.Next(cars.Length)];
+            return $"Это взрослый человек и он ездит на {car}";
         }
     }
 

@@ -14,20 +14,20 @@ namespace Model
         /// <summary>
         /// Инициализирует новый экземпляр класса с пустым списком
         /// </summary>
-        private List<Person> _persons;
+        private List<PersonBase> _persons;
 
         /// <summary>
         /// Конструктор класса по умолчанию
         /// </summary>
         public PersonList()
         {
-            _persons = new List<Person>();
+            _persons = new List<PersonBase>();
         }
 
         /// <summary>
         /// Добавить нового человека в список
         /// </summary>
-        public void Add(Person person)
+        public void Add(PersonBase person)
         {
             _persons.Add(person);
         }
@@ -35,7 +35,7 @@ namespace Model
         /// <summary>
         /// Удалить указанного человека из списка
         /// </summary>
-        public void Remove(Person person)
+        public void Remove(PersonBase person)
         {
             _persons.Remove(person);
         }
@@ -52,7 +52,7 @@ namespace Model
         /// <summary>
         /// Вернуть человека из списка по его индексу
         /// </summary>
-        public Person Get(int index)
+        public PersonBase Get(int index)
         {
             validateIndex(index);
             return _persons[index];
@@ -62,7 +62,7 @@ namespace Model
         /// Вернуть индекс указанного человека в списке
         /// Если человек не найден, вернуть -1
         /// </summary>
-        public int IndexOf(Person person)
+        public int IndexOf(PersonBase person)
         {
             return _persons.IndexOf(person);
         }

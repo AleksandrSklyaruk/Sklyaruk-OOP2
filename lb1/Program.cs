@@ -42,62 +42,28 @@ namespace lb1
             WaitKey();
 
             //Определяем тип 4-го человека (индекс 3) и вызываем специфичный метод
-            Console.WriteLine("\nОпределение типа 4-го человека в списке:\n");
-            Person person4 = list.Get(3);
+            Console.WriteLine("\nОпределение типа 4-го человека:\n");
 
-            if (person4 is Adult adult4)
+            var person = list.Get(3);
+
+            switch (person)
             {
-                Console.WriteLine("---Четвёртый человек — взрослый (Adult)---");
-                Console.WriteLine($" {adult4.Surname} {adult4.Name}\n " +
-                    $"Возраст: {adult4.Age}");
-
-                // Демонстрация специфичного метода/поля для Adult
-                if (adult4.Partner != null)
-                {
-                    Console.WriteLine($" Состоит в браке с: " +
-                        $"{adult4.Partner.Surname} {adult4.Partner.Name}");
-                }
-                else
-                {
-                    Console.WriteLine(" Партнёр: отсутствует");
-                }
-
-                Console.WriteLine($" Место работы: " +
-                    $"{(string.IsNullOrWhiteSpace(adult4.WorkPlace) 
-                    ? "Безработный" 
-                    : adult4.WorkPlace)}");
+                case Adult personAdult:
+                    {
+                        Console.WriteLine(personAdult.GetCar());
+                        break;
+                    }
+                case Child personChild:
+                    {
+                        Console.WriteLine(personChild.GetGame());
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
             }
-            else if (person4 is Child child4)
-            {
-                Console.WriteLine("---Четвёртый человек — ребёнок (Child)---");
-                Console.WriteLine($" {child4.Surname} {child4.Name}\n " +
-                    $"возраст: {child4.Age}");
 
-                if (child4.Father != null)
-                {
-                    Console.WriteLine($" Отец: {child4.Father.Surname} " +
-                        $"{child4.Father.Name}");
-                }
-                else
-                {
-                    Console.WriteLine(" Отец: не указан");
-                }
-
-                if (child4.Mother != null)
-                {
-                    Console.WriteLine($" Мать: {child4.Mother.Surname} " +
-                        $"{child4.Mother.Name}");
-                }
-                else
-                {
-                    Console.WriteLine(" Мать: не указана");
-                }
-
-                Console.WriteLine($" Школа: " +
-                    $"{(string.IsNullOrWhiteSpace(child4.School) 
-                    ? "не учится" 
-                    : child4.School)}");
-            }
             WaitKey();
         }
         /// <summary>

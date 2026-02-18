@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Model
 {
-    public class Child : Person
+    public class Child : PersonBase
     {
         /// <summary>
         /// Отец
@@ -23,6 +23,16 @@ namespace Model
         /// </summary>
         private string _school;
 
+        /// <summary>
+        /// Минимальный возраст ребенка
+        /// </summary>
+        private const int MinAge = 0;
+
+        /// <summary>
+        /// Максимальный возвраст ребенка
+        /// </summary>
+        private const int MaxAge = 17;
+
         public Child(string name, string surname,
             Gender gender, int age, Adult father, Adult mother,
             string school) : base(name, surname, age, gender)
@@ -30,7 +40,6 @@ namespace Model
             Father = father;
             Mother = mother;
             School = school;
-            _maxAge = 17;
         }
 
         /// <summary>
@@ -61,7 +70,7 @@ namespace Model
         }
 
         /// <summary>
-        /// Возвращает строковое описание ребёнка
+        /// Метод возвращает строковое описание ребёнка
         /// </summary>
         public override string GetInfo()
         {
@@ -77,6 +86,33 @@ namespace Model
                 ? " Учебное заведение: не указано\n"
                 : $" Учебное заведение: {School}\n";
             return $"{baseInfo}{fatherInfo}{motherInfo}{schoolInfo}";
+        }
+
+        /// <summary>
+        /// Проверка возраста ребенка
+        /// </summary>
+        /// <param name="age">Возраст</param>
+        /// <exception cref="Exception">Возраст должен соостветствовать 
+        /// возрасту ребенка</exception>
+        protected override void CheckAge(int age)
+        {
+            if ((age < MinAge) || (age > MaxAge))
+            {
+                throw new Exception($"Возраст ребенка должен быть" +
+                    $" в пределах от {MinAge} до {MaxAge}");
+            }
+        }
+
+        /// <summary>
+        /// Специальны метод для ребёнка
+        /// </summary>
+        /// <returns></returns>
+        public string GetGame()
+        {
+            string[] games = { "Red Alert 2", "Postal 2", "Heroes III", "GTA 4", "Mafia" };
+            var random = new Random();
+            string game = games[random.Next(games.Length)];
+            return $"Это ребёнок и он любит играть в {game}";
         }
     }
 }
