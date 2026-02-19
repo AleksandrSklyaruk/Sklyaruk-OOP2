@@ -95,21 +95,24 @@ namespace Model
         {
             Random random = new Random();
 
-            string[] maleNames = { "Михаил", "Артём", "Никита", 
-                "Даниил", "Матвей", "Илья", "Тимофей" };
-            string[] femaleNames = { "София", "Алиса", "Виктория", 
-                "Полина", "Варвара", "Анна", "Мария" };
+            string[] maleNames = { "Михаил", "Артём", "Никита",
+        "Даниил", "Матвей", "Илья", "Тимофей" };
+            string[] femaleNames = { "София", "Алиса", "Виктория",
+        "Полина", "Варвара", "Анна", "Мария" };
 
-            string[] surnamesMale = { "Иванов", "Смирнов", "Кузнецов", 
-                "Попов", "Соколов" };
-            string[] surnamesFemale = { "Иванова", "Смирнова", "Кузнецова", 
-                "Попова", "Соколова" };
+            string[] surnamesMale = { "Иванов", "Смирнов", "Кузнецов",
+        "Попов", "Соколов" };
+            string[] surnamesFemale = { "Иванова", "Смирнова", "Кузнецова",
+        "Попова", "Соколова" };
 
-            string[] schools = { "Школа №15", "Гимназия №2", "Лицей №7", 
-                "Школа №32", "" };
+            // Разделяем детские сады и школы
+            string[] kindergartens = { "Детский сад №5", "Детский сад №12",
+        "Детский сад №23", "Детский сад №25", "" };
+            string[] schools = { "Школа №99", "Гимназия №92", "Школа №107",
+        "Школа №108", "" };
 
-            Gender gender = random.Next(2) == 0 
-                ? Gender.Male 
+            Gender gender = random.Next(2) == 0
+                ? Gender.Male
                 : Gender.Female;
 
             string name = gender == Gender.Male
@@ -135,39 +138,29 @@ namespace Model
                 mother = GetRandomAdult(Gender.Female);
             }
 
-            if (father != null && mother != null) 
-            {
-                mother.Surname = father.Surname + "а";
-            }
-
             if (father != null)
             {
-                if (gender == Gender.Female)
-                {
-                    surname = father.Surname + "а";
-                }
-                else
-                {
-                    surname = father.Surname;
-                }
+                surname = father.Surname;
             }
             else if (mother != null)
             {
-                if (gender == Gender.Male)
-                {
-                    surname = RemoveLastSimvol(mother.Surname);
-                }
-                else
-                {
-                    surname = mother.Surname;
-                }
+                surname = mother.Surname;
             }
 
-            string school = schools[random.Next(schools.Length)];
+            string school = "";
+            if (age < 7)
+            {
+                school = kindergartens[random.Next(kindergartens.Length)];
+            }
+            else
+            {
+                school = schools[random.Next(schools.Length)];
+            }
 
-            return new Child( name, surname, gender, 
-                age, father, mother, school );
+            return new Child( name, surname, gender, age, 
+                father, mother, school);
         }
+
         /// <summary>
         /// Метод удаляет последний символ слова
         /// </summary>
